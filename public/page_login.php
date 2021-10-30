@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_NOTICE);
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,17 +37,21 @@
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-            <div class="alert alert-success">
-                Регистрация успешна
-            </div>
-            <form action="">
+            <?php
+
+            if($_SESSION['message']){
+                echo '<div class="alert alert-success text-dark" role="alert">' . $_SESSION["message"] . '</div>';
+            }
+            unset($_SESSION['message']);
+            ?>
+            <form method="post" action="../login.php">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
+                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="" name="email">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" class="form-control" placeholder="" >
+                    <input type="password" id="password" class="form-control" placeholder="" name="pass">
                 </div>
                 <div class="form-group text-left">
                     <div class="custom-control custom-checkbox">
