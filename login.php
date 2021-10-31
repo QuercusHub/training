@@ -1,4 +1,5 @@
 <?php
+require_once "db.php";
 require_once "function.php";
 session_start();
 
@@ -8,9 +9,10 @@ $pass = $_POST['pass'];
 $user = get_user_by_email($email);
 
 if (!$user){
-    set_name_message('message', 'Пользователь не найден');
-    redirect_to('public/page_login.php');
-}else{
-    login($email, $pass);
+    set_flash_message('message', 'Пользователь не найден');
+    redirect_to('page_login.php');
 }
+
+login($email, $pass);
+
 

@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_NOTICE);
+error_reporting(E_NOTICE);
     session_start();
 ?>
 <!DOCTYPE html>
@@ -66,7 +66,7 @@
                                         unset($_SESSION['message']);
                                         ?>
 
-                                    <form method="post" action="../register.php">
+                                    <form method="post" action="register.php">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
                                             <input type="email" id="emailverify" class="form-control" placeholder="Эл. адрес"  name="email">

@@ -44,7 +44,7 @@ session_start();
             }
             unset($_SESSION['message']);
             ?>
-            <form method="post" action="../login.php">
+            <form method="post" action="login.php">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
                     <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="" name="email">
