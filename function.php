@@ -43,10 +43,12 @@ function add_user($email, $pass){
 function  login($email, $pass){
     $user = get_user_by_email($email);
 
-    if (password_verify($pass, $user['pass'])){
-        $_SESSION['user'] =  [
-            'id' => $user['id'],
-            'email' => $email
+    if (password_verify($pass, $user["pass"])){
+        $_SESSION["auth"] = true;
+        $_SESSION["user"] =  [
+            "id" => $user["id"],
+            "email" => $user["email"],
+            "role" => $user["role"]
         ];
         redirect_to('users.php');
     }else {
@@ -74,3 +76,38 @@ function redirect_to($path)
     exit();
 }
 
+/**
+ * @decription проверка авторизирован ли пользователь
+ * @return bool
+ */
+function is_not_logged_in(): bool
+{
+    if (isset($_SESSION['auth']) && $_SESSION["auth"] === true){
+        return false;
+    }
+    return true;
+}
+
+/**
+ * @decription проверка админ ли
+ * @return bool
+ */
+function is_admin(): bool
+{
+    if($_SESSION["user"]["role"] == "admin"){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @decription получить всех пользователей
+ * @return array
+ */
+function get_all_users()
+{
+    $db = getConnection();
+    $users = $db->query("SELECT * FROM users ")->fetchAll(PDO::FETCH_ASSOC);;
+
+    return $users;
+}

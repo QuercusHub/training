@@ -1,6 +1,9 @@
 <?php
 error_reporting(E_NOTICE);
-    session_start();
+session_start();
+if (isset($_SESSION['auth']) && $_SESSION["auth"] === true){
+    redirect_to("users.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +45,7 @@ error_reporting(E_NOTICE);
                         <span class="text-white opacity-50 ml-auto mr-2 hidden-sm-down">
                             Уже зарегистрированы?
                         </span>
-                        <a href="page_login.html" class="btn-link text-white ml-auto ml-sm-0">
+                        <a href="page_login.php" class="btn-link text-white ml-auto ml-sm-0">
                             Войти
                         </a>
                     </div>

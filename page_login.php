@@ -1,6 +1,11 @@
 <?php
 error_reporting(E_NOTICE);
+require_once 'function.php';
 session_start();
+
+if (isset($_SESSION['auth']) && $_SESSION["auth"] === true){
+    redirect_to("users.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +45,7 @@ session_start();
             <?php
 
             if($_SESSION['message']){
-                echo '<div class="alert alert-success text-dark" role="alert">' . $_SESSION["message"] . '</div>';
+                echo '<div class="alert alert-danger text-dark" role="alert">' . $_SESSION["message"] . '</div>';
             }
             unset($_SESSION['message']);
             ?>
@@ -63,7 +68,7 @@ session_start();
             </form>
         </div>
         <div class="blankpage-footer text-center">
-            Нет аккаунта? <a href="page_register.html"><strong>Зарегистрироваться</strong>
+            Нет аккаунта? <a href="page_register.php"><strong>Зарегистрироваться</strong>
         </div>
     </div>
     <video poster="img/backgrounds/clouds.png" id="bgvid" playsinline autoplay muted loop>
