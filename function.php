@@ -111,3 +111,23 @@ function get_all_users()
 
     return $users;
 }
+
+/**
+ * @decription получить пользователя по id
+ * @return array
+ */
+function get_user_by_id($id)
+{
+    if ($id){
+        $db = getConnection();
+        $sql = 'SELECT * FROM user_data WHERE user_id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+
+        return $result->fetch();
+    }
+}

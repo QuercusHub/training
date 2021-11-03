@@ -1,3 +1,12 @@
+<?php
+require_once 'function.php';
+session_start();
+if(is_not_logged_in()){
+    redirect_to("page_login.php");
+}
+$user = get_user_by_id($_GET["id"]);
+var_dump($user);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,11 +31,8 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="page_login.html">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+               <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Выйти</a>
                 </li>
             </ul>
         </div>
@@ -38,7 +44,7 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="edit_page.php" method="post">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -50,25 +56,25 @@
                                 <!-- username -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Имя</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Иван иванов">
+                                    <input name="name" type="text" id="simpleinput" class="form-control" value="<?= $user["name"]; ?>">
                                 </div>
 
                                 <!-- title -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Место работы</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Marlin Веб-разработчик">
+                                    <input name="job" type="text" id="simpleinput" class="form-control" value="<?= $user["job"]; ?>">
                                 </div>
 
                                 <!-- tel -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Номер телефона</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="8 888 8888 88">
+                                    <input name="phone" type="text" id="simpleinput" class="form-control" value="<?= $user["phone"]; ?>">
                                 </div>
 
                                 <!-- address -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Адрес</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Восточные Королевства, Штормград">
+                                    <input name="adress" type="text" id="simpleinput" class="form-control" value="<?= $user["adress"]; ?>">
                                 </div>
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
                                     <button class="btn btn-warning">Редактировать</button>
