@@ -116,9 +116,10 @@ function get_all_users()
  * @decription получить пользователя по id
  * @return array
  */
-function get_user_by_id($id)
-{
+function get_user_by_id($id){
+
     if ($id){
+
         $db = getConnection();
         $sql = 'SELECT * FROM user_data WHERE user_id = :id';
 
@@ -130,4 +131,18 @@ function get_user_by_id($id)
 
         return $result->fetch();
     }
+}
+
+function update_user_profile($id, $name, $job, $phone, $adress){
+
+    $db = getConnection();
+    $sql = "UPDATE user_data SET name = :name, job = :job, phone = :phone, adress = :adress WHERE user_id = :id";
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $id, PDO::PARAM_INT);
+    $result->bindParam(':name', $name, PDO::PARAM_STR);
+    $result->bindParam(':job', $job, PDO::PARAM_STR);
+    $result->bindParam(':phone', $phone, PDO::PARAM_STR);
+    $result->bindParam(':adress', $adress, PDO::PARAM_STR);
+    $result->execute();
+    set_flash_message("edit", "RRRRR");
 }

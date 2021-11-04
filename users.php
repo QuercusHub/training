@@ -39,21 +39,21 @@ if(is_not_logged_in()){
         </nav>
 
         <main id="js-page-content" role="main" class="page-content mt-3">
-<!--            --><?php //if($_SESSION["user"]["role"] == "admin"):  ?>
-<!--            <div class="alert alert-success">-->
-<!--                Профиль успешно обновлен.-->
-<!--            </div>-->
-<!--            --><?php //endif;  ?>
+            <?php if(isset($_SESSION["edit"])):  ?>
+            <div class="alert alert-success">
+                Профиль успешно обновлен.
+            </div>
+            <?php endif; unset($_SESSION["edit"]); ?>
             <div class="subheader">
                 <h1 class="subheader-title">
-                    <i class='subheader-icon fal fa-users'></i> Список пользователей
+                    <i class="subheader-icon fal fa-users"></i> Список пользователей
                 </h1>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <?php  if(is_admin()):  ?>
                         <a class="btn btn-success" href="create_user.html">Добавить</a>
-                    <?php endif;  ?>
+                    <?php endif; ?>
 
                     <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
                         <input type="text" id="js-filter-contacts" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Найти пользователя">
@@ -86,7 +86,7 @@ if(is_not_logged_in()){
                                             <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="edit.php?id=<?= $user["id"]; ?>">
+                                            <a class="dropdown-item" href="page_edit.php?id=<?= $user["id"] ?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
                                             <a class="dropdown-item" href="security.html">
