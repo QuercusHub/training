@@ -144,5 +144,20 @@ function update_user_profile($id, $name, $job, $phone, $adress){
     $result->bindParam(':phone', $phone, PDO::PARAM_STR);
     $result->bindParam(':adress', $adress, PDO::PARAM_STR);
     $result->execute();
-    set_flash_message("edit", "RRRRR");
+    set_flash_message("edit", "Профиль успешно обновлен");
+    redirect_to("users.php");
+}
+
+function update_security_profile($id, $email, $pass){
+
+    $db = getConnection();
+    $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+    $sql = "UPDATE `users` SET email = :email, pass = :pass WHERE id = :id";
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $id, PDO::PARAM_INT);
+    $result->bindParam(':email', $email, PDO::PARAM_STR);
+    $result->bindParam(':pass', $pass, PDO::PARAM_STR);
+    $result->execute();
+    set_flash_message("edit", "Настройки безопасности успешно обновлены");
+    redirect_to("users.php");
 }

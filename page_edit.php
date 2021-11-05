@@ -78,7 +78,7 @@ $user = get_user_by_id($_GET["id"]);
                                     <input name="adress" type="text" id="simpleinput" class="form-control" value="<?= $user["adress"]; ?>">
                                 </div>
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning">Редактировать</button>
+                                    <button name="edit" class="btn btn-warning">Редактировать</button>
                                 </div>
                             </div>
                         </div>

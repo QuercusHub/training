@@ -41,7 +41,7 @@ if(is_not_logged_in()){
         <main id="js-page-content" role="main" class="page-content mt-3">
             <?php if(isset($_SESSION["edit"])):  ?>
             <div class="alert alert-success">
-                Профиль успешно обновлен.
+                <?php echo $_SESSION["edit"] ?>
             </div>
             <?php endif; unset($_SESSION["edit"]); ?>
             <div class="subheader">
@@ -89,13 +89,13 @@ if(is_not_logged_in()){
                                             <a class="dropdown-item" href="page_edit.php?id=<?= $user["id"] ?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
-                                            <a class="dropdown-item" href="security.html">
+                                            <a class="dropdown-item" href="page_security.php?id=<?= $user["id"] ?>">
                                                 <i class="fa fa-lock"></i>
                                                 Безопасность</a>
-                                            <a class="dropdown-item" href="status.html">
+                                            <a class="dropdown-item" href="status.php?id=<?= $user["id"] ?>">
                                                 <i class="fa fa-sun"></i>
                                                 Установить статус</a>
-                                            <a class="dropdown-item" href="media.html">
+                                            <a class="dropdown-item" href="media.php?id=<?= $user["id"] ?>">
                                                 <i class="fa fa-camera"></i>
                                                 Загрузить аватар
                                             </a>
