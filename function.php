@@ -151,6 +151,7 @@ function update_user_profile($id, $name, $job, $phone, $adress){
 function update_security_profile($id, $email, $pass){
 
     $db = getConnection();
+
     $pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
     $sql = "UPDATE `users` SET email = :email, pass = :pass WHERE id = :id";
     $result = $db->prepare($sql);
@@ -160,4 +161,27 @@ function update_security_profile($id, $email, $pass){
     $result->execute();
     set_flash_message("edit", "Настройки безопасности успешно обновлены");
     redirect_to("users.php");
+}
+
+function create_user($name, $job, $phone, $adress, $email, $pass, $status, $vk, $telegram, $instagram){
+    $db = getConnection();
+
+    $sql = "INSERT INTO `users` SET email = :email, pass = :pass ";
+
+    $result = $db->prepare($sql);
+    $result->bindParam(':email', $email, PDO::PARAM_STR);
+    $result->bindParam(':pass', $pass, PDO::PARAM_STR);
+echo "1";
+    if ($result->execute()) {
+        var_dump(2);
+        $last_id = $db->lastInsertId();
+        $sql2 = "INSERT INTO `user_data` SET user_id = :user_id, name = :name,  job = :job, status = :status, avatar = :avatar";
+        $result2 = $db->prepare($sql2);
+        $result2->bindParam(':user_id', $last_id, PDO::PARAM_STR);
+        $result2->bindParam(':name', $name, PDO::PARAM_STR);
+        $result2->bindParam(':job', $job, PDO::PARAM_STR);
+        $result2->bindParam(':status', $status, PDO::PARAM_STR);
+        $result2->bindParam(':avatar', $avatar, PDO::PARAM_STR);
+        $result2->execute();
+    }
 }
