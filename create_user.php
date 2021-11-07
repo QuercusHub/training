@@ -21,9 +21,11 @@ if (isset($_POST["submit"])) {
     $user = get_user_by_email($email);
 
     if ($user){
-        set_flash_message('message', 'Этот <strong>Email</strong> уже занят другим пользователем, введите другой адрес!');
-        redirect_to('page_register.php');
+        set_flash_message('edit', 'Этот <strong>Email</strong> уже занят другим пользователем, введите другой адрес!');
+        redirect_to('users.php');
+    }else{
+        create_user($name, $job, $phone, $adress, $email, $pass, $status, $path, $vk, $telegram, $instagram);
     }
 }
-echo "1";
-create_user($name, $job, $phone, $adress, $email, $pass, $status, $vk, $telegram, $instagram);
+
+

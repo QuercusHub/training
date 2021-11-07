@@ -163,7 +163,7 @@ function update_security_profile($id, $email, $pass){
     redirect_to("users.php");
 }
 
-function create_user($name, $job, $phone, $adress, $email, $pass, $status, $vk, $telegram, $instagram){
+function create_user($name, $job, $phone, $adress, $email, $pass, $status, $path, $vk, $telegram, $instagram){
     $db = getConnection();
 
     $sql = "INSERT INTO `users` SET email = :email, pass = :pass ";
@@ -171,17 +171,24 @@ function create_user($name, $job, $phone, $adress, $email, $pass, $status, $vk, 
     $result = $db->prepare($sql);
     $result->bindParam(':email', $email, PDO::PARAM_STR);
     $result->bindParam(':pass', $pass, PDO::PARAM_STR);
-echo "1";
+
     if ($result->execute()) {
-        var_dump(2);
+
         $last_id = $db->lastInsertId();
-        $sql2 = "INSERT INTO `user_data` SET user_id = :user_id, name = :name,  job = :job, status = :status, avatar = :avatar";
+        $sql2 = "INSERT INTO `user_data` SET user_id = :user_id, name = :name,  job = :job, phone = :phone, adress = :adress, status = :status, avatar = :avatar, vk = :vk, telegram = :telegram, instagram = :instagram";
         $result2 = $db->prepare($sql2);
-        $result2->bindParam(':user_id', $last_id, PDO::PARAM_STR);
-        $result2->bindParam(':name', $name, PDO::PARAM_STR);
-        $result2->bindParam(':job', $job, PDO::PARAM_STR);
-        $result2->bindParam(':status', $status, PDO::PARAM_STR);
-        $result2->bindParam(':avatar', $avatar, PDO::PARAM_STR);
+        $result2->bindParam(':user_id', $last_id);
+        $result2->bindParam(':name', $name);
+        $result2->bindParam(':job', $job);
+        $result2->bindParam(':phone', $phone);
+        $result2->bindParam(':adress', $adress);
+        $result2->bindParam(':status', $status);
+        $result2->bindParam(':avatar', $path);
+        $result2->bindParam(':vk', $vk);
+        $result2->bindParam(':telegram', $telegram);
+        $result2->bindParam(':instagram', $instagram);
         $result2->execute();
     }
+    set_flash_message("edit", "Новый пользователь добавлен!");
+    redirect_to("users.php");
 }
