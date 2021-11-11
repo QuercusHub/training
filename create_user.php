@@ -27,5 +27,8 @@ if (isset($_POST["submit"])) {
         create_user($name, $job, $phone, $adress, $email, $pass, $status, $path, $vk, $telegram, $instagram);
     }
 }
+if (isset($_POST["set_status"])){
+    set_status($_POST["id"], $_POST["status"]);
 
+}
 

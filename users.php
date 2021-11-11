@@ -4,7 +4,7 @@ session_start();
 if(is_not_logged_in()){
     redirect_to("page_login.php");
 }
-
+//var_dump(get_all_users());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,8 +75,8 @@ if(is_not_logged_in()){
                     <div class="col-xl-4">
                         <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
                             <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
-                                <div class="d-flex flex-row align-items-center">
-                                <span class="status status-success mr-3">
+                                <div class="d-flex flex-row align-items-center s">
+                                <span class="status status-<?php get_status_user($user["status"]); ?> mr-3">
                                     <span class="rounded-circle profile-image d-block " style="background-image:url('img/demo/avatars/avatar-b.png'); background-size: cover;"></span>
                                 </span>
                                     <div class="info-card-text flex-1">
@@ -86,16 +86,16 @@ if(is_not_logged_in()){
                                             <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="page_edit.php?id=<?= $user["id"] ?>">
+                                            <a class="dropdown-item" href="page_edit.php?id=<?= $user["user_id"] ?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
-                                            <a class="dropdown-item" href="page_security.php?id=<?= $user["id"] ?>">
+                                            <a class="dropdown-item" href="page_security.php?id=<?= $user["user_id"] ?>">
                                                 <i class="fa fa-lock"></i>
                                                 Безопасность</a>
-                                            <a class="dropdown-item" href="status.php?id=<?= $user["id"] ?>">
+                                            <a class="dropdown-item" href="status.php?id=<?= $user["user_id"] ?>">
                                                 <i class="fa fa-sun"></i>
                                                 Установить статус</a>
-                                            <a class="dropdown-item" href="media.php?id=<?= $user["id"] ?>">
+                                            <a class="dropdown-item" href="media.php?id=<?= $user["user_id"] ?>">
                                                 <i class="fa fa-camera"></i>
                                                 Загрузить аватар
                                             </a>

@@ -1,3 +1,10 @@
+<?php
+require_once 'function.php';
+session_start();
+if(is_not_logged_in()){
+    redirect_to("page_login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +45,7 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="create_user.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -52,15 +59,16 @@
                                         <!-- status -->
                                         <div class="form-group">
                                             <label class="form-label" for="example-select">Выберите статус</label>
-                                            <select class="form-control" id="example-select">
-                                                <option>Онлайн</option>
-                                                <option>Отошел</option>
-                                                <option>Не беспокоить</option>
+                                            <input type="hidden" name="id" value="<?= $_GET["id"] ?>">
+                                            <select name="status" class="form-control" id="example-select">
+                                                <option value="online">Онлайн</option>
+                                                <option value="away">Отошел</option>
+                                                <option value="dont">Не беспокоить</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                        <button class="btn btn-warning">Set Status</button>
+                                        <button name="set_status" class="btn btn-warning">Set Status</button>
                                     </div>
                                 </div>
                             </div>

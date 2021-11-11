@@ -20,17 +20,17 @@ function get_user_by_email($email)
  * добавить пользователя в БД
  * @return int $id
  */
-function add_user($email, $pass){
+function add_user($email, $pass)
+{
+    $sql = "INSERT INTO users ( `email`, `pass`) VALUES ( '$email', '$pass')";
+    $db = getConnection();
+    $db->exec($sql);
+    $id = $db->lastInsertId();
 
-        $sql = "INSERT INTO users ( `email`, `pass`) VALUES ( '$email', '$pass')";
-        $db = getConnection();
-        $db->exec($sql);
-        $id = $db->lastInsertId();
+    set_flash_message('message', 'Регистрация успешна');
+    redirect_to('page_login.php');
 
-        set_flash_message('message', 'Регистрация успешна');
-        redirect_to('page_login.php');
-
-        return $id;
+    return $id;
 
 }
 
@@ -40,18 +40,19 @@ function add_user($email, $pass){
  * @decription авторизировать пользователя
  * @return bool
  */
-function  login($email, $pass){
+function login($email, $pass)
+{
     $user = get_user_by_email($email);
 
-    if (password_verify($pass, $user["pass"])){
+    if (password_verify($pass, $user["pass"])) {
         $_SESSION["auth"] = true;
-        $_SESSION["user"] =  [
+        $_SESSION["user"] = [
             "id" => $user["id"],
             "email" => $user["email"],
             "role" => $user["role"]
         ];
         redirect_to('users.php');
-    }else {
+    } else {
         set_flash_message('message', 'Не верные данные для входа');
         redirect_to('page_login.php');
     }
@@ -82,7 +83,7 @@ function redirect_to($path)
  */
 function is_not_logged_in(): bool
 {
-    if (isset($_SESSION['auth']) && $_SESSION["auth"] === true){
+    if (isset($_SESSION['auth']) && $_SESSION["auth"] === true) {
         return false;
     }
     return true;
@@ -94,7 +95,7 @@ function is_not_logged_in(): bool
  */
 function is_admin(): bool
 {
-    if($_SESSION["user"]["role"] == "admin"){
+    if ($_SESSION["user"]["role"] == "admin") {
         return true;
     }
     return false;
@@ -107,7 +108,8 @@ function is_admin(): bool
 function get_all_users()
 {
     $db = getConnection();
-    $users = $db->query("SELECT * FROM users ")->fetchAll(PDO::FETCH_ASSOC);;
+    $users = $db->query("SELECT * FROM users INNER JOIN user_data
+    ON users.id = user_data.user_id ")->fetchAll(PDO::FETCH_ASSOC);;
 
     return $users;
 }
@@ -116,9 +118,10 @@ function get_all_users()
  * @decription получить пользователя по id
  * @return array
  */
-function get_user_by_id($id){
+function get_user_by_id($id): array
+{
 
-    if ($id){
+    if ($id) {
 
         $db = getConnection();
         $sql = 'SELECT * FROM user_data WHERE user_id = :id';
@@ -133,7 +136,8 @@ function get_user_by_id($id){
     }
 }
 
-function update_user_profile($id, $name, $job, $phone, $adress){
+function update_user_profile($id, $name, $job, $phone, $adress)
+{
 
     $db = getConnection();
     $sql = "UPDATE user_data SET name = :name, job = :job, phone = :phone, adress = :adress WHERE user_id = :id";
@@ -148,7 +152,8 @@ function update_user_profile($id, $name, $job, $phone, $adress){
     redirect_to("users.php");
 }
 
-function update_security_profile($id, $email, $pass){
+function update_security_profile($id, $email, $pass)
+{
 
     $db = getConnection();
 
@@ -163,7 +168,8 @@ function update_security_profile($id, $email, $pass){
     redirect_to("users.php");
 }
 
-function create_user($name, $job, $phone, $adress, $email, $pass, $status, $path, $vk, $telegram, $instagram){
+function create_user($name, $job, $phone, $adress, $email, $pass, $status, $path, $vk, $telegram, $instagram)
+{
     $db = getConnection();
 
     $sql = "INSERT INTO `users` SET email = :email, pass = :pass ";
@@ -190,5 +196,30 @@ function create_user($name, $job, $phone, $adress, $email, $pass, $status, $path
         $result2->execute();
     }
     set_flash_message("edit", "Новый пользователь добавлен!");
+    redirect_to("users.php");
+}
+
+function get_status_user($status)
+{
+    if ($status == "online") {
+        echo "success";
+    } elseif ($status == "away") {
+        echo "warning";
+    } else {
+        echo "danger";
+    }
+}
+
+function set_status($id, $status)
+{
+    $db = getConnection();
+
+    $sql = "UPDATE `user_data` SET status = :status WHERE user_id = :id";
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $id, PDO::PARAM_INT);
+    $result->bindParam(':status', $status, PDO::PARAM_STR);
+    $result->execute();
+
+    set_flash_message("edit", "Статус обновлен!");
     redirect_to("users.php");
 }
