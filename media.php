@@ -1,3 +1,13 @@
+<?php
+//error_reporting(E_NOTICE);
+require_once 'function.php';
+session_start();
+
+if(is_not_logged_in()){
+    redirect_to("page_login.php");
+}
+$user = get_user_by_id($_GET["id"]);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +36,7 @@
                     <a class="nav-link" href="page_login.html">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="logout.php">Выйти</a>
                 </li>
             </ul>
         </div>
@@ -38,7 +48,7 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="edit.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -48,17 +58,18 @@
                             </div>
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <img src="img/demo/authors/josh.png" alt="" class="img-responsive" width="200">
+                                    <img src="<?php echo $user["avatar"]; ?>" alt="" class="img-responsive" width="200">
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Выберите аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
+                                    <input type="hidden" name="id" value="<?= $_GET["id"] ?>">
+                                    <input name="avatar" type="file" id="example-fileinput" class="form-control-file">
                                 </div>
 
 
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning">Загрузить</button>
+                                    <button name="btn_avatar" class="btn btn-warning">Загрузить</button>
                                 </div>
                             </div>
                         </div>

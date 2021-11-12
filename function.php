@@ -223,3 +223,17 @@ function set_status($id, $status)
     set_flash_message("edit", "Статус обновлен!");
     redirect_to("users.php");
 }
+
+function save_path_avatar($id, $avatar)
+{
+    $db = getConnection();
+
+    $sql = "UPDATE `user_data` SET avatar = :avatar WHERE user_id = :id";
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $id, PDO::PARAM_INT);
+    $result->bindParam(':avatar', $avatar, PDO::PARAM_STR);
+    $result->execute();
+
+    set_flash_message("edit", "Аватар установлен");
+    redirect_to("users.php");
+}
