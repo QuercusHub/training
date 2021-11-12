@@ -99,7 +99,7 @@ if(is_not_logged_in()){
                                                 <i class="fa fa-camera"></i>
                                                 Загрузить аватар
                                             </a>
-                                            <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                            <a href="delete.php?id=<?= $user["user_id"] ?>" class="dropdown-item" onclick="return confirm('Вы действительно хотите удалить  пользователя  <?php echo $user['user_id'] ?>?');">
                                                 <i class="fa fa-window-close"></i>
                                                 Удалить
                                             </a>

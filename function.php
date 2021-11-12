@@ -237,3 +237,17 @@ function save_path_avatar($id, $avatar)
     set_flash_message("edit", "Аватар установлен");
     redirect_to("users.php");
 }
+
+function delete_user($id)
+{
+    $db = getConnection();
+
+    $sql = "DELETE user_data, `users` FROM user_data
+	LEFT JOIN `users` ON user_data.user_id = users.id WHERE user_data.user_id = :id";
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $id, PDO::PARAM_INT);
+    $result->execute();
+
+    set_flash_message("edit", "Пользователь удален");
+    redirect_to("users.php");
+}
